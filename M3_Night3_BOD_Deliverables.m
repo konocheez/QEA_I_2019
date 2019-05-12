@@ -81,22 +81,6 @@ ylabel('velocity')
 title('Velocity and Acceleration')
 legend('linear speed', 'angular velocity')
 hold off;
-%%
-
-r = [(-2*a*((l-cos(alpha*t))*cos(alpha*t)+(1-l))); (2*a*(l-cos(alpha*t))*sin(alpha*t)); 0];
-That = diff(r)/norm(diff(r));
-Nhat = diff(That)/norm(diff(That))
-
-u = linspace(0,3.2,50);
-t = linspace(0, pi/alpha, 50);
-w = cross(That, diff(That));
-
-That = double(subs(That, t)); %substitute u values into function
-%r = double(subs(r, t)); %substitute u values into function
-Nhat = double(subs(Nhat, t)); %substitute u values into function
-w = double(subs(w, t));
-d = 0.255;
-
 %% Deliverable 4 calculations
 clear;
 
@@ -105,12 +89,12 @@ l = 0.4
 
 syms t;
 syms u;
-alpha = .224;
+% alpha = .224;
+alpha = .22
 
 %do functions symbolically first
 r = [(-2*a*((l-cos(alpha*t))*cos(alpha*t)+(1-l))); (2*a*(l-cos(alpha*t))*sin(alpha*t)); 0];
 That = diff(r)/norm(diff(r));
-velocity = That;
 Nhat = diff(That)/norm(diff(That))
 
 % initialize variables essential to actual function values
@@ -120,12 +104,14 @@ w = cross(That, diff(That));
 
 % subtitute essential variable into functions
 That = double(subs(That, t)); %substitute u values into function
-r = double(subs(r, t)); %substitute u values into function
+% r = double(subs(r, t)); %substitute u values into function
 Nhat = double(subs(Nhat, t)); %substitute u values into function
 w = double(subs(w, t));
 d = 0.255;
  
-velocity = double(subs(velocity, t)); %substitute u values into function
+velocity = diff(r);
+velocity = double(subs(velocity, t));
+
 linspeed = vecnorm(velocity);
 vleft = linspeed + w(3,:) * (d/2);
 vright = linspeed - w(3,:) * (d/2);
